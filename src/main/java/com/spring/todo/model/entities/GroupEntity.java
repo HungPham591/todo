@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity(name = "GroupTask")
@@ -19,12 +19,12 @@ public class GroupEntity extends BaseEntity<GroupEntity, GroupResponse> {
     private String bio;
 
     @ManyToMany(mappedBy = "groupsJoin", fetch = FetchType.LAZY)
-    private Collection<UserEntity> members;
+    private List<UserEntity> members;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private UserEntity owner;
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
-    private Collection<TaskEntity> tasks;
+    private List<TaskEntity> tasks;
 
     @Override
     public GroupResponse toReponse() {

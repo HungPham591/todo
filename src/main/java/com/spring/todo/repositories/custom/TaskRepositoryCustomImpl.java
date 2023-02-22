@@ -198,17 +198,17 @@ public class TaskRepositoryCustomImpl extends BaseRepositoryCustom<TaskEntity> i
     }
 
     @Override
-    public void deleteTask(Map<String, Object> filter) {
-        Session session = this.getSession();
-        Query query = session.createQuery("DELETE Task task WHERE task.id in :ids");
-
-        if (filter.containsKey("ids")) {
-            return;
-        }
-
-        List<String> listId = (List<String>) filter.get("ids");
-
-        query.setParameter("ids", listId);
-        int affectedRow = query.executeUpdate();
+    public void deleteTask(TaskInput taskInput) {
+//        Session session = this.getSession();
+//        Query query = session.createQuery("DELETE Task task WHERE task.id in :ids");
+//
+//        if (filter.containsKey("ids")) {
+//            return;
+//        }
+//
+//        List<String> listId = (List<String>) filter.get("ids");
+//
+//        query.setParameter("ids", listId);
+//        int affectedRow = query.executeUpdate();
     }
 }

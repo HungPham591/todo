@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity(name = "User")
@@ -30,22 +30,22 @@ public class UserEntity extends ProfileEntity<UserEntity, UserResponse> {
     @OneToOne(mappedBy = "profile", fetch = FetchType.LAZY)
     private AccountEntity account;
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private Collection<GroupEntity> groupsHas;
+    private List<GroupEntity> groupsHas;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "User_Group",
             joinColumns = {@JoinColumn(name = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")}
     )
-    private Collection<GroupEntity> groupsJoin;
+    private List<GroupEntity> groupsJoin;
     @OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
-    private Collection<TaskEntity> tasksJoin;
+    private List<TaskEntity> tasksJoin;
     @OneToMany(mappedBy = "assigner", fetch = FetchType.LAZY)
-    private Collection<TaskEntity> tasksHas;
+    private List<TaskEntity> tasksHas;
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private Collection<TagEntity> tags;
+    private List<TagEntity> tags;
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private Collection<CommentEntity> comments;
+    private List<CommentEntity> comments;
 
     @Override
     public UserResponse toReponse() {

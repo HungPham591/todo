@@ -30,15 +30,15 @@ public class AccountService extends BaseService {
 
     }
 
-    public AccountInput getAccountByFilter(Map<String, Object> filter) throws Exception {
+    public AccountEntity getAccountByFilter(Map<String, Object> filter) throws Exception {
         return null;
     }
 
-    public boolean checkIfValidOldPassword(AccountInput accountInput, String oldPassword) throws Exception {
+    public boolean checkIfValidOldPassword(AccountEntity account, String oldPassword) throws Exception {
         return false;
     }
 
-    public void changeUserPassword(AccountInput accountInput, String password) throws Exception {
+    public void changeUserPassword(AccountEntity account, String password) throws Exception {
 
     }
 

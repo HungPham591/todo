@@ -9,7 +9,7 @@ public class AdminInput extends BaseInput<AdminInput, AdminEntity> {
     private String password;
 
     @Override
-    public Object toEntity() {
+    public AdminEntity toEntity() {
         return null;
     }
 }

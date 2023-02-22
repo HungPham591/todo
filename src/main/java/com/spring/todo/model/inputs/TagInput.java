@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class TagInput extends BaseInput<TagInput, TagEntity> {
     @Override
-    public Object toEntity() {
+    public TagEntity toEntity() {
         return null;
     }
 }

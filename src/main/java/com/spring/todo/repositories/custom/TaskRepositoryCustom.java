@@ -13,5 +13,5 @@ public interface TaskRepositoryCustom {
 
     public void updateTask(Map<String, Object> filter, TaskInput data);
 
-    public void deleteTask(Map<String, Object> filter);
+    public void deleteTask(TaskInput taskInput);
 }

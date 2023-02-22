@@ -18,8 +18,8 @@ public interface GroupRepository extends BaseRepository<GroupEntity>, GroupRepos
     @Query(value = "select u from GroupTask u where u.name = :name")
     public Page<GroupEntity> findByName(@Param("name") String name, Pageable pageable);
 
-    @Query(value = "select u from GroupTask u join u.owner r where r.id = :owner")
-    public Page<GroupEntity> findGroupByOwner(@Param("owner") String owner, Pageable pageable);
+    @Query(value = "select u from GroupTask u join u.owner r where r.id = :owner and r.name = :name")
+    public Page<GroupEntity> findGroupByOwner(@Param("owner") String owner, @Param("name") String name, Pageable pageable);
 
     @Query(value = "select u from GroupTask u join u.members r where r.id = :member")
     public Page<GroupEntity> findGroupByMember(@Param("member") String member, Pageable pageable);

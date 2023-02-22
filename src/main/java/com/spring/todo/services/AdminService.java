@@ -1,6 +1,5 @@
 package com.spring.todo.services;
 
-import com.spring.todo.model.response.AdminResponse;
 import com.spring.todo.model.entities.AdminEntity;
 import com.spring.todo.model.inputs.AdminInput;
 import com.spring.todo.repositories.AdminRepository;
@@ -13,7 +12,6 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AdminService extends BaseService {
@@ -24,18 +22,18 @@ public class AdminService extends BaseService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public AdminResponse getInfo(Authentication authentication) {
+    public AdminEntity getInfo(Authentication authentication) {
         String adminId = authentication.getName();
         Optional<AdminEntity> adminEntity = adminRepository.findById(adminId);
-        return adminEntity.get().toReponse();
+        return adminEntity.get();
     }
 
-    public AdminResponse getAdmin(String id) {
-        AdminEntity adminEntity = adminRepository.getReferenceById(id);
-        return adminEntity.toReponse();
+    public AdminEntity getAdmin(String id) {
+        Optional<AdminEntity> adminEntity = adminRepository.findById(id);
+        return adminEntity.get();
     }
 
-    public List<AdminResponse> getAdmins(String email, String id, Integer skip, Integer limit) {
+    public List<AdminEntity> getAdmins(String email, String id, Integer skip, Integer limit) {
         List<AdminEntity> listAdminEntity = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(id)) {
@@ -44,20 +42,17 @@ public class AdminService extends BaseService {
             listAdminEntity = adminRepository.findAdminByLikeEmail(email);
         }
 
-        return listAdminEntity.stream().map(adminEntity -> adminEntity.toReponse()).collect(Collectors.toList());
+        return listAdminEntity;
     }
 
-    public AdminResponse updateAdmin(AdminInput adminInput, String id) {
-        AdminEntity adminEntity = new AdminEntity();
-        modelMapper.map(adminInput, adminEntity);
+    public AdminEntity updateAdmin(AdminInput adminInput, String id) {
+        AdminEntity adminEntity = adminInput.toEntity();
         adminEntity.setId(id);
         adminEntity = adminRepository.save(adminEntity);
-        AdminResponse adminResponse = new AdminResponse();
-        modelMapper.map(adminEntity, adminResponse);
-        return adminResponse;
+        return adminEntity;
     }
 
-    public AdminResponse updatePassword(Authentication authentication, String password, String oldPassword) {
+    public AdminEntity updatePassword(Authentication authentication, String password, String oldPassword) {
         return null;
     }
 }

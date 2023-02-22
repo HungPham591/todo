@@ -3,12 +3,13 @@ package com.spring.todo.services;
 import com.spring.todo.model.entities.AccountEntity;
 import com.spring.todo.model.entities.CustomUserDetailEntity;
 import com.spring.todo.repositories.AccountRepository;
-import com.spring.todo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
@@ -18,10 +19,10 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //username la id cua account
-        AccountEntity account = accountRepository.getById(username);
+        Optional<AccountEntity> account = accountRepository.findById(username);
         if (account == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new CustomUserDetailEntity(account);
+        return new CustomUserDetailEntity(account.get());
     }
 }

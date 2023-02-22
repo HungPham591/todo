@@ -1,5 +1,6 @@
 package com.spring.todo.model.entities;
 
+import com.spring.todo.model.response.BaseResponse;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ public class RefreshTokenEntity extends BaseEntity {
     private String token;
     private Date expired;
     @Override
-    public Object toReponse() {
+    public BaseResponse toReponse() {
         return null;
     }
 }

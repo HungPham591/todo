@@ -1,6 +1,5 @@
 package com.spring.todo.services;
 
-import com.spring.todo.model.response.TaskResponse;
 import com.spring.todo.model.entities.TaskEntity;
 import com.spring.todo.model.inputs.TaskInput;
 import com.spring.todo.repositories.TaskRepository;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService extends BaseService {
@@ -21,63 +21,47 @@ public class TaskService extends BaseService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public TaskResponse getTask(String id) throws Exception {
+    public TaskEntity getTask(String user, String id) throws Exception {
         Optional<TaskEntity> taskEntity = taskRepository.findById(id);
-        TaskResponse taskDto = modelMapper.map(taskEntity, TaskResponse.class);
-        return taskDto;
+        return taskEntity.get();
     }
 
-    public List<TaskResponse> getTasks(Map<String, Object> filter) throws Exception {
+    public List<TaskEntity> getTasks(String user, Map<String, Object> filter) throws Exception {
         List<TaskEntity> results = taskRepository.getTasksByFilter(filter);
-
-        List<TaskResponse> taskDtos = new ArrayList<>();
-        modelMapper.map(results, taskDtos);
-        return taskDtos;
+        return results;
     }
 
-    public TaskResponse createTask(TaskInput taskInput) throws Exception {
-        TaskEntity taskEntity = new TaskEntity();
-        modelMapper.map(taskInput, taskEntity);
-
-        TaskEntity result = taskRepository.save(taskEntity);
-        TaskResponse taskDto = modelMapper.map(result, TaskResponse.class);
-        return taskDto;
+    public TaskEntity createTask(String user, TaskInput taskInput) throws Exception {
+        TaskEntity result = taskRepository.save(taskInput.toEntity());
+        return result;
     }
 
-    public List<TaskResponse> createTasks(List<TaskInput> taskRespons) throws Exception {
-        List<TaskEntity> taskEntityList = new ArrayList<>();
-        modelMapper.map(taskEntityList, taskRespons);
+    public List<TaskEntity> createTasks(String user, List<TaskInput> taskInputs) throws Exception {
+        List<TaskEntity> taskEntityList = taskInputs.stream().map(input -> input.toEntity()).collect(Collectors.toList());
         List<TaskEntity> taskEntities = taskRepository.saveAll(taskEntityList);
-        List<TaskResponse> taskDtos = new ArrayList<>();
-        modelMapper.map(taskEntities, taskDtos);
-        return taskDtos;
+        return taskEntities;
+    }
+
+    public TaskEntity updateOneTask(String user, String id, TaskInput taskInput) {
+        return null;
+    }
+
+    public void updateTask(String user, Map<String, Object> filter, TaskInput taskInput) throws Exception {
+        taskRepository.updateTask(filter, taskInput);
     }
 
 
-    public TaskResponse updateTask(Map<String, Object> filter, TaskInput taskInput) throws Exception {
-        TaskEntity taskEntity = new TaskEntity();
-        modelMapper.map(taskEntity, taskInput);
-        TaskEntity result = taskRepository.save(taskEntity);
-        TaskResponse taskDto = modelMapper.map(result, TaskResponse.class);
-        return taskDto;
-    }
-
-
-    public void updateTasks(Map<String, Object> filter, TaskInput data) throws Exception {
+    public void updateTasks(String user, Map<String, Object> filter, TaskInput data) throws Exception {
         taskRepository.updateTask(filter, data);
     }
 
-    public TaskResponse deleteTask(String id) throws Exception {
-        TaskEntity taskEntity = new TaskEntity();
-        taskEntity.setId(id);
-        TaskResponse taskDto = new TaskResponse();
-        modelMapper.map(taskDto,taskEntity);
+    public TaskEntity deleteTask(String user, String id) throws Exception {
         taskRepository.deleteById(id);
-        return taskDto;
+        return new TaskEntity();
     }
 
-    public List<TaskResponse> deleteTasks(Map<String, Object> filter) throws Exception {
-        taskRepository.deleteTask(filter);
+    public List<TaskEntity> deleteTasks(String user, List<TaskInput> input) throws Exception {
+//        taskRepository.deleteTask(input);
         return new ArrayList<>();
     }
 }

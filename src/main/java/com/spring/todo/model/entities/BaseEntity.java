@@ -52,7 +52,7 @@ public abstract class BaseEntity<E extends BaseEntity, D extends BaseResponse> i
         return modelMapper;
     }
 
-    public abstract Object toReponse();
+    public abstract D toReponse();
 
     protected D mapToResponse(E entity, D dto) {
         ModelMapper modelMapper = initModelMapper();

@@ -20,16 +20,16 @@ public class TaskEntity extends BaseEntity<TaskEntity, TaskResponse> {
     @NotBlank
     private String img;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigner")
+    @JoinColumn(name = "assigner_id")
     private UserEntity assigner;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee")
+    @JoinColumn(name = "assignee_id")
     private UserEntity assignee;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group")
+    @JoinColumn(name = "group_id")
     private GroupEntity group;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag")
+    @JoinColumn(name = "tag_id")
     private TagEntity tag;
     @NotNull
     private String state;

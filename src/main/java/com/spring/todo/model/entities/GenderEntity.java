@@ -6,12 +6,12 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 @Data
-@Entity(name = "GroupTask")
+@Entity(name = "Gender")
 public class GenderEntity extends BaseEntity<GenderEntity, GenderResponse> {
     private String code;
     private String name;
     @Override
-    public Object toReponse() {
+    public GenderResponse toReponse() {
         return null;
     }
 }

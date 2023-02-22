@@ -10,7 +10,7 @@ public class RoleInput extends BaseInput<RoleInput, RoleEntity> {
     private String code;
 
     @Override
-    public Object toEntity() {
+    public RoleEntity toEntity() {
         return null;
     }
 }

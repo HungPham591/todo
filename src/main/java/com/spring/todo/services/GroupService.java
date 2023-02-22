@@ -1,71 +1,53 @@
 package com.spring.todo.services;
 
-import com.spring.todo.model.response.GroupResponse;
-import com.spring.todo.model.response.UserGroupResponse;
+import com.spring.todo.model.entities.GroupEntity;
 import com.spring.todo.model.inputs.GroupInput;
-import org.springframework.http.ResponseEntity;
+import com.spring.todo.repositories.GroupRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupService extends BaseService {
 
-    public ResponseEntity<GroupResponse> getGroup(String id) {
-        return null;
+    @Autowired
+    private GroupRepository groupRepository;
+
+    public GroupEntity getGroup(String id) {
+        Optional<GroupEntity> groupEntity = groupRepository.findById(id);
+        return groupEntity.get();
     }
 
-    public ResponseEntity<List<GroupResponse>> getMyGroups(Authentication authentication, String name, String sort, Integer skip, Integer limit) {
-        return null;
+    public List<GroupEntity> getMyGroups(String user, String name, String sort, Integer skip, Integer limit) {
+        Pageable page = PageRequest.of(skip, limit, Sort.by(sort));
+        Page<GroupEntity> listGroup = groupRepository.findGroupByOwner(user, name, page);
+        return listGroup.get().collect(Collectors.toList());
     }
 
-    public ResponseEntity<List<GroupResponse>> getRequestGroups(Authentication authentication, String name, Integer skip, Integer limit) {
-        return null;
+    public GroupEntity createGroup(String user, GroupInput groupInput) {
+        GroupEntity groupEntity = groupRepository.save(groupInput.toEntity());
+        return groupEntity;
     }
 
-    public ResponseEntity<List<GroupResponse>> getReceivedGroups(Authentication authentication, String name, Integer skip, Integer limit) {
-        return null;
+    public GroupEntity updateGroup(String user, String id, GroupInput groupInput) {
+        GroupEntity groupEntity = groupInput.toEntity();
+        groupEntity.setId(id);
+        groupEntity = groupRepository.save(groupEntity);
+        return groupEntity;
     }
 
-    public ResponseEntity<List<GroupResponse>> getSuggestGroup(Authentication authentication, String name, Integer skip, Integer limit) {
-        return null;
-    }
-
-    public ResponseEntity<GroupResponse> createGroup(GroupInput groupInput) {
-        return null;
-    }
-
-    public ResponseEntity<GroupResponse> updateGroup(String id, GroupInput groupInput) {
-        return null;
-    }
-
-    public ResponseEntity<GroupResponse> deleteGroup(String id) {
-        return null;
-    }
-
-    public ResponseEntity<UserGroupResponse> joinGroup(Authentication authentication, Map<String, Object> body) {
-        return null;
-    }
-
-    public ResponseEntity<UserGroupResponse> acceptJoin(Authentication authentication, Map<String, Object> body) {
-        return null;
-    }
-
-    public ResponseEntity<UserGroupResponse> rejectJoin(Authentication authentication, Map<String, Object> body) {
-        return null;
-    }
-
-    public ResponseEntity<UserGroupResponse> inviteGroup(Authentication authentication, Map<String, Object> body) {
-        return null;
-    }
-
-    public ResponseEntity<UserGroupResponse> acceptInvite(Authentication authentication, Map<String, Object> body) {
-        return null;
-    }
-
-    public ResponseEntity<UserGroupResponse> rejectInvite(Authentication authentication, Map<String, Object> body) {
-        return null;
+    public GroupEntity deleteGroup(String user, String id) {
+        groupRepository.deleteById(id);
+        GroupEntity groupEntity = new GroupEntity();
+        groupEntity.setId(id);
+        return groupEntity;
     }
 }

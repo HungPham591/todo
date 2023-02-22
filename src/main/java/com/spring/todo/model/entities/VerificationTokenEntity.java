@@ -1,5 +1,6 @@
 package com.spring.todo.model.entities;
 
+import com.spring.todo.model.response.BaseResponse;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class VerificationTokenEntity extends BaseEntity {
     }
 
     @Override
-    public Object toReponse() {
+    public BaseResponse toReponse() {
         return null;
     }
 }

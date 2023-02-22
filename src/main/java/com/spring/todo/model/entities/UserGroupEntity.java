@@ -1,5 +1,6 @@
 package com.spring.todo.model.entities;
 
+import com.spring.todo.model.response.UserGroupResponse;
 import com.spring.todo.model.response.UserResponse;
 import lombok.Data;
 
@@ -10,18 +11,18 @@ import javax.persistence.ManyToOne;
 
 @Data
 @Entity(name = "UserGroup")
-public class UserGroupEntity extends BaseEntity<UserGroupEntity, UserResponse> {
+public class UserGroupEntity extends BaseEntity<UserGroupEntity, UserGroupResponse> {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role")
+    @JoinColumn(name = "role_id")
     private RoleEntity role;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group")
+    @JoinColumn(name = "group_id")
     private GroupEntity group;
     @Override
-    public Object toReponse() {
+    public UserGroupResponse toReponse() {
         return null;
     }
 }

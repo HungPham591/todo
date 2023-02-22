@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +49,7 @@ public class TokenProvider {
     public Authentication getAuthentication(String token) {
         Claims claims = jwtParser.parseClaimsJws(token).getBody();
 
-        Collection<? extends GrantedAuthority> authorities = Arrays
+        List<? extends GrantedAuthority> authorities = Arrays
                 .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .filter(auth -> !auth.trim().isEmpty())
                 .map(SimpleGrantedAuthority::new)

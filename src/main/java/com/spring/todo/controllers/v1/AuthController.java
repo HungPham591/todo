@@ -2,10 +2,10 @@ package com.spring.todo.controllers.v1;
 
 import com.spring.todo.common.events.OnRegistrationCompleteEvent;
 import com.spring.todo.controllers.BaseController;
-import com.spring.todo.model.response.AccountResponse;
 import com.spring.todo.model.entities.AccountEntity;
 import com.spring.todo.model.entities.VerificationTokenEntity;
 import com.spring.todo.model.inputs.AccountInput;
+import com.spring.todo.model.response.AccountResponse;
 import com.spring.todo.services.AccountService;
 import com.spring.todo.services.MailService;
 import com.spring.todo.services.VerificationTokenService;
@@ -108,18 +108,19 @@ public class AuthController extends BaseController {
 
     @PostMapping("/password")
     @PreAuthorize("hasRole('READ_PRIVILEGE')")
-    public ResponseEntity<String> changeUserPassword(Authentication authentication,
-                                                     @RequestParam("password") String password,
-                                                     @RequestParam("oldpassword") String oldPassword) throws Exception {
+    public ResponseEntity<String> changeUserPassword(
+            Authentication authentication,
+            @RequestParam("password") String password,
+            @RequestParam("oldpassword") String oldPassword) throws Exception {
         Map<String, Object> filter = new HashMap<>();
         filter.put("user_id", authentication.getName());
 
-        AccountInput accountInput = accountService.getAccountByFilter(filter);
+        AccountEntity account = accountService.getAccountByFilter(filter);
 
-        if (!accountService.checkIfValidOldPassword(accountInput, oldPassword)) {
+        if (!accountService.checkIfValidOldPassword(account, oldPassword)) {
 //            throw new InvalidOldPasswordException();
         }
-        accountService.changeUserPassword(accountInput, password);
+        accountService.changeUserPassword(account, password);
         return ResponseEntity.ok("ok");
     }
 

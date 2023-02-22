@@ -58,7 +58,7 @@ public class TaskInputControllerTest {
     public void testGetTask() throws Exception {
         List<TaskInput> listTaskInput = IntStream.range(0, 10).mapToObj(i -> new TaskInput()).collect(Collectors.toList());
 
-        Mockito.when(taskService.getTasks((any(HashMap.class)))).thenReturn(listTaskInput);
+//        Mockito.when(taskService.getTasks((any(HashMap.class)))).thenReturn(listTaskInput);
 
         mvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -71,7 +71,7 @@ public class TaskInputControllerTest {
     public void testCreateTask() throws Exception {
         List<TaskInput> listTaskInput = IntStream.range(0, 10).mapToObj(i -> new TaskInput()).collect(Collectors.toList());
 
-        Mockito.when(taskService.getTasks((any(HashMap.class)))).thenReturn(listTaskInput);
+//        Mockito.when(taskService.getTasks((any(HashMap.class)))).thenReturn(listTaskInput);
 
         Map<String,Object> body = new HashMap<>();
 

@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity(name = "TypeRelationship")
@@ -14,7 +14,7 @@ public class TypeRelationshipEntity extends BaseEntity<TypeRelationshipEntity, T
     private String name;
     private String code;
     @OneToMany(mappedBy = "type",fetch = FetchType.LAZY)
-    private Collection<UserRelationshipEntity> userRelationships;
+    private List<UserRelationshipEntity> userRelationships;
 
     @Override
     public TypeRelationshipResponse toReponse() {

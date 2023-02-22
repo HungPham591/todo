@@ -1,56 +1,62 @@
 package com.spring.todo.controllers.v1;
 
 import com.spring.todo.controllers.BaseController;
-import com.spring.todo.model.response.RoleResponse;
-import com.spring.todo.model.entities.RoleEntity;
-import com.spring.todo.model.inputs.RoleInput;
-import com.spring.todo.services.RoleService;
+import com.spring.todo.model.entities.TagEntity;
+import com.spring.todo.model.inputs.TagInput;
+import com.spring.todo.model.response.TagResponse;
+import com.spring.todo.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/v1/tag", produces = MediaType.APPLICATION_JSON_VALUE)
-public class TagController extends BaseController {
+public class TagController extends BaseController<TagEntity, TagResponse> {
     @Autowired
-    private RoleService roleService;
+    private TagService tagService;
 
-    @GetMapping("/role")
-    public ResponseEntity<RoleResponse> getRole(@RequestParam("id") String id) {
-        return null;
+    @GetMapping("/tag")
+    public ResponseEntity<TagResponse> getTag(@RequestParam("id") String id) throws Exception {
+        TagEntity tagEntity = tagService.getTag(id);
+        return success(tagEntity);
     }
 
-    @GetMapping("/roles")
-    public ResponseEntity<RoleResponse> getRoles(
-            @RequestParam("name") String name,
-            @RequestParam("skip") Integer skip,
-            @RequestParam("limit") Integer limit) {
-        return null;
+    @GetMapping("/tags")
+    public ResponseEntity<List<TagResponse>> getTags(@RequestParam("name") String name, @RequestParam("skip") Integer skip, @RequestParam("limit") Integer limit) throws Exception {
+        List<TagEntity> tagEntities = tagService.getTags(name, skip, limit);
+        return success(tagEntities);
     }
 
-    @GetMapping("/myRole")
-    public ResponseEntity<RoleResponse> getMyRole(
+    @GetMapping("/myTag")
+    public ResponseEntity<List<TagResponse>> getMyTag(
             Authentication authentication,
-            @RequestParam String group) {
-        return null;
+            @RequestParam String group) throws Exception {
+        List<TagEntity> tagEntities = tagService.getMyTag(authentication, group);
+        return success(tagEntities);
     }
 
     @PostMapping("/")
-    public ResponseEntity<RoleResponse> createRole(@RequestBody RoleInput roleInput) {
-        return null;
+    public ResponseEntity<TagResponse> createTag(Authentication authentication, @RequestBody TagInput tagInput) throws Exception {
+        TagEntity tagEntity = tagService.createTag(authentication.getName(), tagInput);
+        return success(tagEntity);
     }
 
     @PutMapping("/")
-    public ResponseEntity<RoleEntity> updateRole(
+    public ResponseEntity<TagResponse> updateTag(
+            Authentication authentication,
             @RequestParam("id") String id,
-            @RequestBody RoleInput roleInput) {
-        return null;
+            @RequestBody TagInput tagInput) throws Exception {
+        TagEntity tagEntity = tagService.updateTag(authentication.getName(), id, tagInput);
+        return success(tagEntity);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<RoleEntity> deleteRole(@RequestParam("id") String id) {
-        return null;
+    public ResponseEntity<TagResponse> deleteTag(Authentication authentication, @RequestParam("id") String id) throws Exception {
+        TagEntity tagEntity = tagService.deleteTag(authentication.getName(), id);
+        return success(tagEntity);
     }
 }

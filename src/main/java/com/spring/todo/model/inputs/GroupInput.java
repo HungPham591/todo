@@ -9,7 +9,7 @@ public class GroupInput extends BaseInput<GroupInput, GroupEntity> {
     private String bio;
 
     @Override
-    public Object toEntity() {
+    public GroupEntity toEntity() {
         return null;
     }
 }

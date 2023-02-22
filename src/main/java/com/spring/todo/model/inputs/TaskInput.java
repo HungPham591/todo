@@ -13,7 +13,7 @@ public class TaskInput extends BaseInput<TaskInput, TaskEntity> {
     private boolean done;
 
     @Override
-    public Object toEntity() {
+    public TaskEntity toEntity() {
         return null;
     }
 }

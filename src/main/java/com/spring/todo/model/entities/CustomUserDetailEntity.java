@@ -6,8 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +14,9 @@ public class CustomUserDetailEntity implements UserDetails {
     AccountEntity account;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(account.getRole()));
+    public List<? extends GrantedAuthority> getAuthorities() {
+        return null;
+//        return List.singleton(new SimpleGrantedAuthority(account.getRole()));
     }
 
     @Override

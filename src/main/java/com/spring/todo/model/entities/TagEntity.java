@@ -4,7 +4,7 @@ import com.spring.todo.model.response.TagResponse;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity(name = "Tag")
@@ -15,7 +15,7 @@ public class TagEntity extends BaseEntity<TagEntity, TagResponse> {
     @JoinColumn(name = "owner_id")
     private UserEntity owner;
     @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
-    private Collection<TaskEntity> tasks;
+    private List<TaskEntity> tasks;
 
     @Override
     public TagResponse toReponse() {
