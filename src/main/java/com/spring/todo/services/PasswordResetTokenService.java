@@ -13,23 +13,23 @@ public class PasswordResetTokenService extends BaseService {
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public void createPasswordResetTokenForUser(AccountEntity account, String token) {
+    public void createPasswordResetTokenForUser(AccountEntity account, String token) throws Exception {
         PasswordResetTokenEntity myToken = new PasswordResetTokenEntity();
         myToken.setToken(token);
         myToken.setAccount(account);
         passwordResetTokenRepository.save(myToken);
     }
 
-    private boolean isTokenFound(PasswordResetTokenEntity passToken) {
+    private boolean isTokenFound(PasswordResetTokenEntity passToken) throws Exception {
         return passToken != null;
     }
 
-    private boolean isTokenExpired(PasswordResetTokenEntity passToken) {
+    private boolean isTokenExpired(PasswordResetTokenEntity passToken) throws Exception {
         final Calendar cal = Calendar.getInstance();
         return passToken.getExpiryDate().before(cal.getTime());
     }
 
-    public String validatePasswordResetToken(String token) {
+    public String validatePasswordResetToken(String token) throws Exception {
         final PasswordResetTokenEntity passToken = passwordResetTokenRepository.findByToken(token);
 
         return !isTokenFound(passToken) ? "invalidToken" : isTokenExpired(passToken) ? "expired" : null;

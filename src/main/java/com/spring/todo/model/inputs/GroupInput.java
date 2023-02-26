@@ -1,6 +1,7 @@
 package com.spring.todo.model.inputs;
 
 import com.spring.todo.model.entities.GroupEntity;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter

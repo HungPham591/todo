@@ -17,29 +17,28 @@ public class UserService extends BaseService {
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
 
-    public void createVerificationToken(AccountInput accountInput, String token) {
+    public void createVerificationToken(AccountInput accountInput, String token) throws Exception {
 
     }
 
-    public UserEntity getInfo(Authentication authentication) {
+    public UserEntity getInfo(Authentication authentication) throws Exception {
         authentication.getName();
         return null;
     }
 
-    public UserEntity getUser(String id) {
+    public UserEntity getUser(String id) throws Exception {
         return null;
     }
 
-    public UserEntity updateUser(String user, String id, UserInput userInput) {
+    public UserEntity updateUser(String user, String id, UserInput userInput) throws Exception {
         return null;
     }
 
-    public UserEntity updatePassword(String user, String password, String oldPassword
-    ) {
+    public UserEntity updatePassword(String user, String password, String oldPassword) throws Exception {
         return null;
     }
 
-    public UserEntity deleteUser(String user, String id) {
+    public UserEntity deleteUser(String user, String id) throws Exception {
         return null;
     }
 }

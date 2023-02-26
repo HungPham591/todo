@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public interface CommentRepository extends BaseRepository<CommentEntity>, CommentRepositoryCustom {
-    @Query("select c from Comment c where c.task = :task")
-    public Page<CommentEntity> findByTask(@Param("task") String task, Pageable pageable);
+    @Query("select c from Comment c where c.task = :task and c.owner = :user")
+    public Page<CommentEntity> findByTask(@Param("user") String user, @Param("task") String task, Pageable pageable);
 }

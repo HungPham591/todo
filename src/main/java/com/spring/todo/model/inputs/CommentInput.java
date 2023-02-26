@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class CommentInput extends BaseInput<CommentInput, CommentEntity> {
     @Override
-    public Object toEntity() {
+    public CommentEntity toEntity() {
         return null;
     }
 }

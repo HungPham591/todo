@@ -1,13 +1,14 @@
 package com.spring.todo.model.inputs;
 
 import com.spring.todo.model.entities.BaseEntity;
+import lombok.Data;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import java.io.Serializable;
 
-@Getter
+@Data
 public abstract class BaseInput<M extends BaseInput, E extends BaseEntity> implements Serializable {
     private String id;
 

@@ -39,14 +39,14 @@ public class TypeRelationshipController extends BaseController<TypeRelationshipE
     }
 
     @PutMapping("/")
-    public ResponseEntity<TypeRelationshipResponse> updateTypeRelationship(Authentication authentication, @RequestBody TypeRelationshipInput input) throws Exception {
-        TypeRelationshipEntity typeRelationshipEntity = typeRelationshipService.updateTypeRelationship(input);
+    public ResponseEntity<TypeRelationshipResponse> updateTypeRelationship(Authentication authentication, @RequestParam String id, @RequestBody TypeRelationshipInput input) throws Exception {
+        TypeRelationshipEntity typeRelationshipEntity = typeRelationshipService.updateTypeRelationship(id, input);
         return success(typeRelationshipEntity);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<TypeRelationshipResponse> deleteTypeRelationship(Authentication authentication, @RequestBody TypeRelationshipInput input) throws Exception {
-        TypeRelationshipEntity typeRelationshipEntity = typeRelationshipService.deleteTypeRelationship(input);
+    public ResponseEntity<TypeRelationshipResponse> deleteTypeRelationship(Authentication authentication, @RequestParam String id, @RequestBody TypeRelationshipInput input) throws Exception {
+        TypeRelationshipEntity typeRelationshipEntity = typeRelationshipService.deleteTypeRelationship(id, input);
         return success(typeRelationshipEntity);
     }
 }

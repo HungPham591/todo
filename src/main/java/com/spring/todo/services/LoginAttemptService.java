@@ -22,7 +22,7 @@ public class LoginAttemptService extends BaseService {
         });
     }
 
-    public void loginSucceeded(String key) {
+    public void loginSucceeded(String key) throws Exception {
         attemptsCache.invalidate(key);
     }
 

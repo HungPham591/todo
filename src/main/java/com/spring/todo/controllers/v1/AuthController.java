@@ -1,6 +1,8 @@
 package com.spring.todo.controllers.v1;
 
 import com.spring.todo.common.events.OnRegistrationCompleteEvent;
+import com.spring.todo.common.exceptions.InvalidOldPasswordException;
+import com.spring.todo.common.exceptions.UserAlreadyExistException;
 import com.spring.todo.controllers.BaseController;
 import com.spring.todo.model.entities.AccountEntity;
 import com.spring.todo.model.entities.VerificationTokenEntity;
@@ -59,8 +61,8 @@ public class AuthController extends BaseController {
 
             String appUrl = request.getContextPath();
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
-//        } catch (UserAlreadyExistException uaeEx) {
-            //An account for that username/email already exists.
+        } catch (UserAlreadyExistException uaeEx) {
+            logger.error("[AuthController][registerUserAccount] error {}", uaeEx);
         } catch (RuntimeException ex) {
             //emailError
         } catch (Exception e) {
@@ -118,7 +120,7 @@ public class AuthController extends BaseController {
         AccountEntity account = accountService.getAccountByFilter(filter);
 
         if (!accountService.checkIfValidOldPassword(account, oldPassword)) {
-//            throw new InvalidOldPasswordException();
+            throw new InvalidOldPasswordException();
         }
         accountService.changeUserPassword(account, password);
         return ResponseEntity.ok("ok");

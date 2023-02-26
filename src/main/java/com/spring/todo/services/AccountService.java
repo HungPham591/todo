@@ -22,7 +22,12 @@ public class AccountService extends BaseService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void createNewAccount() throws Exception {
+    public AccountEntity createNewAccount(AccountInput accountInput) throws Exception {
+        return null;
+    }
+
+    public AccountEntity findByEmail(String email) throws Exception{
+        return null;
     }
 
 

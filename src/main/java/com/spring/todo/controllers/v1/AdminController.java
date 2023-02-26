@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/admin", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminController extends BaseController<AdminEntity,AdminResponse> {
+public class AdminController extends BaseController<AdminEntity, AdminResponse> {
     @Autowired
     private AdminService adminService;
 
@@ -47,7 +47,7 @@ public class AdminController extends BaseController<AdminEntity,AdminResponse> {
             Authentication authentication,
             @RequestBody AdminInput adminInput,
             @RequestParam("id") String id) throws Exception {
-        AdminEntity adminEntity = adminService.updateAdmin(adminInput, id);
+        AdminEntity adminEntity = adminService.updateAdmin(authentication.getName(), adminInput, id);
         return success(adminEntity);
     }
 
@@ -56,7 +56,7 @@ public class AdminController extends BaseController<AdminEntity,AdminResponse> {
             Authentication authentication,
             @RequestParam("password") String password,
             @RequestParam("oldpassword") String oldPassword) throws Exception {
-        AdminEntity adminEntity = adminService.updatePassword(authentication, password, oldPassword);
+        AdminEntity adminEntity = adminService.updatePassword(authentication.getName(), password, oldPassword);
         return success(adminEntity);
     }
 }

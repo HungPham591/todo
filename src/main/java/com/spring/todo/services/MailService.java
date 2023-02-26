@@ -20,7 +20,7 @@ public class MailService extends BaseService {
     @Autowired
     private Environment env;
 
-    public SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, Locale locale, VerificationTokenEntity newToken, AccountEntity user) {
+    public SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, Locale locale, VerificationTokenEntity newToken, AccountEntity user) throws Exception {
         String confirmationUrl = contextPath + "/regitrationConfirm.html?token=" + newToken.getToken();
         String message = messages.getMessage("message.resendToken", null, locale);
         SimpleMailMessage email = new SimpleMailMessage();
@@ -30,13 +30,13 @@ public class MailService extends BaseService {
         email.setTo(user.getEmail());
         return email;
     }
-    public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, AccountInput accountInput) {
+    public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, AccountInput accountInput) throws Exception {
         String url = contextPath + "/user/changePassword?token=" + token;
         String message = messages.getMessage("message.resetPassword", null, locale);
         return constructEmail("Reset Password", message + " \r\n" + url, accountInput);
     }
 
-    public SimpleMailMessage constructEmail(String subject, String body, AccountInput accountInput) {
+    public SimpleMailMessage constructEmail(String subject, String body, AccountInput accountInput) throws Exception {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setSubject(subject);
         email.setText(body);

@@ -25,7 +25,7 @@ public class TaskController extends BaseController<TaskEntity, TaskResponse> {
 
     @GetMapping("/task")
     private ResponseEntity<TaskResponse> getTask(Authentication authentication, @RequestParam("id") String id) throws Exception {
-        TaskEntity result = taskService.getTask(authentication.getName(), id);
+        TaskEntity result = taskService.getTask(id);
         return success(result);
     }
 

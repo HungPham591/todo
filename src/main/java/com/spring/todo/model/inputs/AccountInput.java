@@ -16,7 +16,7 @@ public class AccountInput extends BaseInput<AccountInput, AccountEntity> {
     private String matchingPassword;
 
     @Override
-    public Object toEntity() {
+    public AccountEntity toEntity() {
         return null;
     }
 }
